@@ -447,10 +447,12 @@ async function loadCoachingData(){
       const branch = ghConfig.branch||'main';
       const url = `https://raw.githubusercontent.com/${ghConfig.owner}/${ghConfig.repo}/${branch}/data.json?t=${Date.now()}`;
       const res = await fetch(url);
+      
       if(res.ok){
         const data = await res.json();
         coachingData = data;
         updateSyncStatus('synced');
+        cache: "no-store"
         return;
       }
     }catch(e){ console.warn('GitHub fetch failed, using default data', e); }
