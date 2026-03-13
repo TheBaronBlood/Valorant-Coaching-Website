@@ -337,6 +337,13 @@
             "sub": ""
           }
         ]
+      },
+      {
+        "id": "sec_1773427552144",
+        "icon": "📌",
+        "title": "Test",
+        "collapsed": false,
+        "items": []
       }
     ]
   },
