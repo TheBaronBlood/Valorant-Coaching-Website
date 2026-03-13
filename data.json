@@ -527,33 +527,6 @@
           "text": "Karte nicht geschaut — in die Mitte gestarrt"
         }
       ]
-    },
-    {
-      "id": "ses_1773427623993",
-      "num": 3,
-      "label": "scheiß runde",
-      "rating": "bad",
-      "ratingText": "Alles",
-      "notes": [
-        {
-          "id": "sn_1773427623994",
-          "type": "pos",
-          "round": "5",
-          "text": "Da bist du Runtergesprungen"
-        },
-        {
-          "id": "sn_1773428065447",
-          "type": "neg",
-          "round": "187",
-          "text": "dumm wie immer"
-        },
-        {
-          "id": "sn_1773428557801",
-          "type": "neg",
-          "round": "1",
-          "text": "test"
-        }
-      ]
     }
   ]
 }
