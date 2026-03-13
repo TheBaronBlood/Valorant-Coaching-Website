@@ -119,7 +119,7 @@
         "id": "sec_1773427623992",
         "icon": "📌",
         "title": "Test",
-        "collapsed": false,
+        "collapsed": true,
         "items": []
       }
     ],
@@ -525,6 +525,21 @@
           "type": "neg",
           "round": "12",
           "text": "Karte nicht geschaut — in die Mitte gestarrt"
+        }
+      ]
+    },
+    {
+      "id": "ses_1773427623993",
+      "num": 3,
+      "label": "scheiß runde",
+      "rating": "bad",
+      "ratingText": "Alles",
+      "notes": [
+        {
+          "id": "sn_1773427623994",
+          "type": "pos",
+          "round": "5",
+          "text": "Da bist du Runtergesprungen"
         }
       ]
     }
