@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAL COACHING — OVE × BARONBLOOD</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500&display=swap');
+:root{--bg:#0A0E13;--surface:#0F1923;--surface2:#1A2634;--border:#1E2D3D;--red:#FF4655;--red-dim:rgba(255,70,85,0.12);--yellow:#F5A623;--yellow-dim:rgba(245,166,35,0.12);--green:#50FA7B;--green-dim:rgba(80,250,123,0.10);--blue:#4A9EFF;--blue-dim:rgba(74,158,255,0.10);--text:#D8E0EA;--text-dim:#6B7A8D}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:300;min-height:100vh;display:flex;flex-direction:column}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:16px;height:52px;position:sticky;top:0;z-index:100;flex-shrink:0}
+.logo{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;letter-spacing:3px;color:var(--red);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.logo-diamond{display:block;width:7px;height:7px;background:var(--red);transform:rotate(45deg)}
+.header-sub{font-size:11px;color:var(--text-dim);letter-spacing:2px;font-family:'Share Tech Mono',monospace}
+.header-spacer{flex:1}
+.edit-toggle{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-family:'Share Tech Mono',monospace;padding:5px 12px;letter-spacing:1.5px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
+.edit-toggle:hover{border-color:var(--red);color:var(--red)}
+.edit-toggle.active{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+.coach-badge{background:var(--red-dim);border:1px solid rgba(255,70,85,0.3);color:var(--red);font-size:11px;font-family:'Share Tech Mono',monospace;padding:4px 10px;letter-spacing:1.5px}
+
+/* LAYOUT */
+.layout{display:flex;flex:1;overflow:hidden}
+nav{width:210px;min-width:210px;background:var(--surface);border-right:1px solid var(--border);padding:20px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto}
+.nav-group{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);padding:0 18px 6px;font-family:'Share Tech Mono',monospace}
+nav ul{list-style:none;margin-bottom:20px}
+nav ul li a{display:flex;align-items:center;gap:9px;padding:8px 18px;color:var(--text-dim);text-decoration:none;font-size:13px;cursor:pointer;transition:all .12s;border-left:2px solid transparent}
+nav ul li a:hover,nav ul li a.active{color:var(--text);background:var(--red-dim);border-left-color:var(--red)}
+.nav-icon{font-size:13px;width:15px;text-align:center}
+main{flex:1;padding:36px 44px;overflow-y:auto;width:100%}
+.content-wrap{max-width:1600px;width:100%}
+
+/* SECTION HEADER */
+.section-header{margin-bottom:28px}
+.section-tag{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);margin-bottom:6px}
+.section-title{font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:1}
+.section-desc{margin-top:8px;font-size:13px;color:var(--text-dim);line-height:1.6;max-width:520px}
+
+/* EDIT BANNER */
+.edit-banner{background:var(--red-dim);border:1px solid rgba(255,70,85,0.3);padding:8px 14px;margin-bottom:20px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--red);letter-spacing:1px;display:flex;align-items:center;gap:8px}
+.edit-banner::before{content:'✎';font-size:13px}
+
+/* PROFICIENCY BADGES */
+.prof-legend{display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:11px;color:var(--text-dim);flex-wrap:wrap}
+.prof-badge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1.5px;padding:3px 8px;cursor:pointer;user-select:none;transition:opacity .15s;white-space:nowrap}
+.prof-badge:hover{opacity:.8}
+.prof-none{background:rgba(107,122,141,0.1);border:1px solid rgba(107,122,141,0.3);color:var(--text-dim)}
+.prof-red{background:var(--red-dim);border:1px solid rgba(255,70,85,0.4);color:var(--red)}
+.prof-yellow{background:var(--yellow-dim);border:1px solid rgba(245,166,35,0.4);color:var(--yellow)}
+.prof-green{background:var(--green-dim);border:1px solid rgba(80,250,123,0.4);color:var(--green)}
+
+/* ERROR CARDS */
+.error-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin-bottom:16px}
+.error-card{background:var(--surface);border:1px solid var(--border);padding:14px 16px;position:relative;overflow:hidden}
+.error-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.error-card.crit::before{background:var(--red)}.error-card.high::before{background:var(--yellow)}.error-card.med::before{background:var(--blue)}
+.error-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px}
+.error-level{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;margin-bottom:3px}
+.error-card.crit .error-level{color:var(--red)}.error-card.high .error-level{color:var(--yellow)}.error-card.med .error-level{color:var(--blue)}
+.error-name{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;color:#fff;letter-spacing:0.3px}
+.error-desc{font-size:12px;color:var(--text-dim);line-height:1.5}
+
+/* RULE BLOCKS */
+.rule-block{background:var(--surface);border:1px solid var(--border);margin-bottom:10px}
+.rule-blocks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:10px}
+.rule-block-header{padding:12px 16px;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.block-chevron{margin-left:auto;color:var(--text-dim);font-size:11px;transition:transform .15s;flex-shrink:0}
+.block-chevron.collapsed{transform:rotate(-90deg)}
+.rule-block-body.hidden{display:none}
+.rule-item{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(30,45,61,0.5);transition:background .1s}
+.rule-item:last-child{border-bottom:none}.rule-item:hover{background:rgba(255,70,85,0.03)}
+.rule-dot{width:5px;height:5px;border:1.5px solid var(--red);transform:rotate(45deg);margin-top:6px;flex-shrink:0}
+.rule-item-content{flex:1}.rule-text{font-size:13px;line-height:1.5;color:var(--text)}.rule-text strong{color:#fff;font-weight:500}
+.rule-sub{font-size:11.5px;color:var(--text-dim);margin-top:2px}
+.rule-item-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+
+/* WARMUP */
+.warmup-phase{background:var(--surface);border:1px solid var(--border);margin-bottom:14px}
+.warmup-phase-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.warmup-icon{width:30px;height:30px;background:var(--red-dim);border:1px solid rgba(255,70,85,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.warmup-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.warmup-subtitle{font-size:11px;color:var(--text-dim)}
+.warmup-time{margin-left:auto;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text-dim)}
+.warmup-task{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(30,45,61,0.4)}
+.warmup-task:last-child{border-bottom:none}
+.task-num{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--red);width:18px;flex-shrink:0;padding-top:2px}
+.task-body{flex:1}.task-name{font-size:13px;font-weight:500;color:var(--text)}.task-note{font-size:11.5px;color:var(--text-dim);margin-top:2px}
+.task-priority{margin-top:4px;font-size:9px;font-family:'Share Tech Mono',monospace;color:var(--red);background:var(--red-dim);display:inline-block;padding:2px 7px;letter-spacing:1px}
+
+/* SESSION CARDS */
+.session-card{background:var(--surface);border:1px solid var(--border);margin-bottom:18px}
+.session-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.session-num{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--red);line-height:1}
+.session-label{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.session-coach{font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--text-dim)}
+.session-rating{margin-left:auto;font-family:'Share Tech Mono',monospace;font-size:10px;padding:4px 9px;flex-shrink:0}
+.session-rating.bad{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,70,85,0.3)}
+.session-rating.ok{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,166,35,0.3)}
+.session-rating.good{background:var(--green-dim);color:var(--green);border:1px solid rgba(80,250,123,0.3)}
+.session-note{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;border-bottom:1px solid rgba(30,45,61,0.4);font-size:13px}
+.session-note:last-child{border-bottom:none}
+.note-type{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1.5px;padding:2px 6px;flex-shrink:0;margin-top:1px;width:50px;text-align:center}
+.note-type.neg{background:var(--red-dim);color:var(--red)}.note-type.pos{background:var(--green-dim);color:var(--green)}.note-type.tip{background:var(--blue-dim);color:var(--blue)}
+.note-round{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);padding:2px 5px;flex-shrink:0;margin-top:1px}
+.note-text{flex:1;color:var(--text);line-height:1.5}
+
+/* EDIT MODE BUTTONS */
+.del-btn{position:absolute;top:8px;right:8px;background:transparent;border:none;color:var(--text-dim);font-size:12px;cursor:pointer;padding:2px 4px;line-height:1;transition:color .12s}
+.del-btn:hover{color:var(--red)}
+.del-btn-sm{background:transparent;border:none;color:var(--text-dim);font-size:11px;cursor:pointer;padding:2px 5px;line-height:1;transition:color .12s;flex-shrink:0}
+.del-btn-sm:hover{color:var(--red)}
+.add-item-row{padding:8px 16px;border-top:1px dashed rgba(30,45,61,0.8)}
+.add-item-btn{background:transparent;border:1px dashed rgba(107,122,141,0.3);color:var(--text-dim);font-size:11px;font-family:'Share Tech Mono',monospace;padding:5px 12px;cursor:pointer;letter-spacing:1px;transition:all .12s;width:100%}
+.add-item-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+.add-card-btn{background:transparent;border:1px dashed rgba(107,122,141,0.3);color:var(--text-dim);font-size:11px;font-family:'Share Tech Mono',monospace;padding:9px 16px;cursor:pointer;letter-spacing:1px;transition:all .12s;width:100%;margin-top:10px;display:block}
+.add-card-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:center;justify-content:center}
+.modal-overlay.hidden{display:none}
+.modal-box{background:var(--surface);border:1px solid var(--border);width:420px;max-width:90vw;max-height:85vh;overflow-y:auto}
+.modal-header{padding:16px 20px;border-bottom:1px solid var(--border);font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.modal-body{padding:20px}
+.modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:11px;font-family:'Share Tech Mono',monospace;color:var(--text-dim);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);font-size:13px;padding:8px 10px;font-family:'Inter',sans-serif;outline:none;transition:border-color .12s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--red)}
+.form-group textarea{resize:vertical;min-height:70px}
+.form-group select option{background:var(--surface)}
+.form-check label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;font-family:'Inter',sans-serif;color:var(--text);text-transform:none;letter-spacing:0}
+.form-check input[type=checkbox]{width:auto;accent-color:var(--red)}
+.btn-primary{background:var(--red);border:none;color:#fff;font-size:12px;font-family:'Share Tech Mono',monospace;padding:8px 18px;cursor:pointer;letter-spacing:1.5px;transition:opacity .12s}
+.btn-primary:hover{opacity:.85}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-size:12px;font-family:'Share Tech Mono',monospace;padding:8px 18px;cursor:pointer;letter-spacing:1.5px;transition:all .12s}
+.btn-secondary:hover{border-color:var(--text-dim);color:var(--text)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border)}
+
+/* ===== DASHBOARD ===== */
+.db-greeting{margin-bottom:32px}
+.db-greeting-sub{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--red);margin-bottom:6px}
+.db-greeting-name{font-family:'Rajdhani',sans-serif;font-size:40px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;line-height:1}
+.db-greeting-desc{font-size:13px;color:var(--text-dim);margin-top:8px}
+.db-grid-top{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1.5vw,24px);margin-bottom:clamp(8px,1.5vw,16px)}
+.db-stat{background:var(--surface);border:1px solid var(--border);padding:clamp(12px,1.5vw,22px) clamp(14px,1.8vw,26px);position:relative;overflow:hidden}
+.db-stat-label{font-family:'Share Tech Mono',monospace;font-size:clamp(8px,0.7vw,11px);letter-spacing:2px;color:var(--text-dim);margin-bottom:clamp(4px,0.5vw,8px);text-transform:uppercase}
+.db-stat-val{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,3.5vw,52px);font-weight:700;line-height:1;color:#fff}
+.db-stat-sub{font-size:clamp(10px,0.8vw,13px);color:var(--text-dim);margin-top:clamp(2px,0.3vw,6px)}
+.db-grid-mid{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-bottom:10px}
+.db-grid-bot{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(min-width:1400px){.db-grid-mid{grid-template-columns:1.6fr 1fr}.db-grid-bot{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.db-grid-mid,.db-grid-bot{grid-template-columns:1fr}.db-grid-top{grid-template-columns:repeat(2,1fr)}}
+
+/* STAT TILES */
+.db-stat-accent{position:absolute;bottom:0;left:0;right:0;height:2px}
+.db-stat.c-red .db-stat-accent{background:var(--red)}
+.db-stat.c-yellow .db-stat-accent{background:var(--yellow)}
+.db-stat.c-green .db-stat-accent{background:var(--green)}
+.db-stat.c-blue .db-stat-accent{background:var(--blue)}
+.db-stat-val.c-red{color:var(--red)}.db-stat-val.c-yellow{color:var(--yellow)}.db-stat-val.c-green{color:var(--green)}
+
+/* SKILL OVERVIEW CARD */
+.db-card{background:var(--surface);border:1px solid var(--border);padding:18px}
+.db-card-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.db-card-title span{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;font-weight:400;margin-left:auto}
+
+.skill-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.skill-bar-row:last-child{margin-bottom:0}
+.skill-bar-label{font-size:12px;color:var(--text);width:90px;flex-shrink:0}
+.skill-bar-track{flex:1;height:6px;background:var(--border);position:relative;overflow:hidden}
+.skill-bar-fill{height:100%;transition:width .4s ease;position:relative}
+.skill-bar-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:rgba(255,255,255,0.4)}
+.skill-bar-pct{font-family:'Share Tech Mono',monospace;font-size:10px;width:28px;text-align:right;flex-shrink:0}
+
+/* FOCUS LIST */
+.focus-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(30,45,61,0.5)}
+.focus-item:last-child{border-bottom:none}
+.focus-dot{width:5px;height:5px;flex-shrink:0;margin-top:5px;transform:rotate(45deg)}
+.focus-dot.r{background:var(--red);border:1px solid var(--red)}
+.focus-dot.y{background:var(--yellow);border:1px solid var(--yellow)}
+.focus-item-text{font-size:12.5px;color:var(--text);line-height:1.4;flex:1}
+.focus-item-cat{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:1px;flex-shrink:0;margin-top:2px}
+
+/* DONUT */
+.donut-wrap{display:flex;align-items:center;gap:20px}
+.donut-svg{flex-shrink:0}
+.donut-legend{display:flex;flex-direction:column;gap:8px;font-size:12px}
+.donut-leg-item{display:flex;align-items:center;gap:7px}
+.donut-leg-dot{width:7px;height:7px;transform:rotate(45deg);flex-shrink:0}
+
+/* RECENT SESSION */
+.ses-mini-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(30,45,61,0.4);font-size:12px}
+.ses-mini-row:last-child{border-bottom:none}
+.ses-mini-badge{font-family:'Share Tech Mono',monospace;font-size:9px;padding:2px 6px;flex-shrink:0}
+.ses-mini-badge.neg{background:var(--red-dim);color:var(--red)}
+.ses-mini-badge.pos{background:var(--green-dim);color:var(--green)}
+.ses-mini-badge.tip{background:var(--blue-dim);color:var(--blue)}
+.ses-mini-text{color:var(--text-dim);flex:1}
+
+/* QUICK NAV TILES */
+.qnav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:10px}
+.qnav-tile{background:var(--surface);border:1px solid var(--border);padding:12px;cursor:pointer;transition:all .15s;text-align:center}
+.qnav-tile:hover{background:var(--red-dim);border-color:rgba(255,70,85,0.4)}
+.qnav-tile-icon{font-size:18px;margin-bottom:4px}
+.qnav-tile-label{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim)}
+.qnav-tile:hover .qnav-tile-label{color:var(--red)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-diamond"></span>Val Coaching</div>
+  <span class="header-sub">Ove × BaronBlood</span>
+  <div class="header-spacer"></div>
+  <button class="edit-toggle" id="edit-toggle" onclick="toggleEditMode()">
+    <span id="edit-icon">🔒</span>
+    <span id="edit-label">EDIT MODE</span>
+  </button>
+  <button class="edit-toggle" id="save-gh-btn" style="display:none" onclick="saveToGitHub()">
+    <span>☁</span>
+    <span>SPEICHERN</span>
+  </button>
+  <button class="edit-toggle" onclick="openGhSettings()" title="GitHub Verbindung einrichten" style="padding:5px 9px">
+    <span>⚙</span>
+  </button>
+  <span id="sync-status" style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--text-dim)">LOCAL</span>
+  <span class="coach-badge">COACH: OVE</span>
+</header>
+
+<div class="layout">
+  <nav id="sidebar"></nav>
+  <main id="content"></main>
+</div>
+
+<div class="modal-overlay hidden" id="modal-overlay" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header" id="modal-title">Hinzufügen</div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal()">ABBRECHEN</button>
+      <button class="btn-primary" onclick="submitModal()">HINZUFÜGEN</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// DEFAULT DATA
+// ================================================================
+const DEFAULT_DATA = {
+  fehler: [
+    {id:'f1',level:'crit',name:'Kein Fokus aufs Game',desc:'AFK während Mates sterben, halbe Stunde nicht aufgepasst. Größtes Problem überhaupt.',proficiency:null},
+    {id:'f2',level:'crit',name:'Overreveal',desc:'Zu weit aus der Deckung herauslehnen, von mehreren Angles getroffen werden.',proficiency:null},
+    {id:'f3',level:'crit',name:'Kein Slice the Pie',desc:'Ecken nicht schrittweise clearen. Immer pie-slicen bevor man reinläuft — nie blind rein.',proficiency:null},
+    {id:'f4',level:'high',name:'Kein Buyen nach 1 verlorener Runde',desc:'Erst Tab schauen was Teammates kaufen, dann entscheiden. Nicht blind kaufen.',proficiency:null},
+    {id:'f5',level:'high',name:'Crosshair zu niedrig',desc:'Crosshair Placement muss auf Kopfhöhe sein. Nah an Ecken positionieren.',proficiency:null},
+    {id:'f6',level:'high',name:'Minimap ignorieren',desc:'Karte regelmäßig checken, Gegner predicten. Nicht in die Mitte starren.',proficiency:null},
+    {id:'f7',level:'med',name:'Overpeeking ohne Info',desc:'Ohne Info blind reinpeeken. Erst Info sammeln (Reveal, Minimap, Teammates), dann peeken.',proficiency:null},
+    {id:'f8',level:'med',name:'Unnötiger Dog / Ability Waste',desc:'Abilities verschwenden wenn Space schon geclearet. Dog nur für Entry nutzen.',proficiency:null},
+  ],
+  skills: {
+    mechanics: [
+      {id:'mc1',title:'Crosshair Placement',icon:'🎯',collapsed:false,items:[
+        {id:'mi1',text:'Immer auf Kopfhöhe',sub:'Nie nach unten schauen wenn du läufst',proficiency:null},
+        {id:'mi2',text:'Nah an Ecken positionieren, nicht in die Mitte',sub:'Weniger Mausbewegung → schnellere Reaktion',proficiency:null},
+        {id:'mi3',text:'Nach Reveal runter schauen',sub:'Sicher gehen ob niemand mehr da ist',proficiency:null},
+      ]},
+      {id:'mc2',title:'Schuss-Mechanik',icon:'🔫',collapsed:false,items:[
+        {id:'mi4',text:'Kein Run and Gun',sub:'Immer stoppen bevor schießen',proficiency:null},
+        {id:'mi5',text:'Kein Overheat',sub:'Nicht zu viele Schüsse hintereinander — Spray verloren',proficiency:null},
+        {id:'mi6',text:'Während Gunfight adjusten',sub:'Maus bewegen, nicht einfrieren',proficiency:null},
+      ]},
+      {id:'mc3',title:'Micro Flicks',icon:'⚡',collapsed:false,items:[
+        {id:'mi7',text:'Gezielte schnelle Flick-Bewegungen trainieren',sub:'Nicht wild zucken',proficiency:null},
+        {id:'mi8',text:'Aimlabs: Micro Flicks von A Site Heaven',sub:'Mehrmals wiederholen!',proficiency:null},
+      ]},
+    ],
+    movement: [
+      {id:'mv1',title:'Peeken & Timing',icon:'🚶',collapsed:false,items:[
+        {id:'mvi1',text:'Pre-aimen beim Peeken',sub:'Crosshair schon auf dem Angle bevor du reinschaust',proficiency:null},
+        {id:'mvi2',text:'Zeit lassen nach dem Peek',sub:'Nicht sofort schießen — kurz warten',proficiency:null},
+        {id:'mvi3',text:'Kein Shift-Peeken',sub:'',proficiency:null},
+        {id:'mvi4',text:'Nicht blind rein ohne Info',sub:'',proficiency:null},
+      ]},
+      {id:'mv2',title:'Positionierung',icon:'🗺️',collapsed:false,items:[
+        {id:'mvi5',text:'Slice the Pie',sub:'Ecken schrittweise clearen, nie blind umrunden',proficiency:null},
+        {id:'mvi6',text:'Nicht zu offen stehen',sub:'Nie von mehreren Angles gleichzeitig geshottable',proficiency:null},
+        {id:'mvi7',text:'Deckung nutzen',sub:'Hinter Wand gehen wenn es brenzlich wird',proficiency:null},
+        {id:'mvi8',text:'Reposition nach Kill oder Gefahr',sub:'',proficiency:null},
+        {id:'mvi9',text:'Close gehen bei Waffendisadvantage',sub:'Schlechtere Waffe = kürzere Distanz anstreben',proficiency:null},
+      ]},
+      {id:'mv3',title:'Strafen',icon:'↔️',collapsed:false,items:[
+        {id:'mvi10',text:'Counter-strafe',sub:'Bewegen → stoppen → einzelner Schuss',proficiency:null},
+        {id:'mvi11',text:'Mehr Movement generell',sub:'Ist besser geworden, weiter üben',proficiency:null},
+        {id:'mvi12',text:'Spectre nicht auf Long Range',sub:'',proficiency:null},
+      ]},
+    ],
+    gamesense: [
+      {id:'gs1',title:'Map Awareness',icon:'🗺️',collapsed:false,items:[
+        {id:'gsi1',text:'Minimap regelmäßig checken',sub:'Nicht lost in die Mitte starren',proficiency:null},
+        {id:'gsi2',text:'Tab checken was Teammates kaufen',sub:'Dann eigene Kaufentscheidung anpassen',proficiency:null},
+        {id:'gsi3',text:'Gegner predicten',sub:'Basierend auf letzter bekannter Info',proficiency:null},
+      ]},
+      {id:'gs2',title:'Economy',icon:'💰',collapsed:false,items:[
+        {id:'gsi4',text:'Kein Buy nach 1 verlorener Runde ohne Tab-Check',sub:'Wenn alle sparen → alle sparen → sonst verliert man Runde 3',proficiency:null},
+      ]},
+      {id:'gs3',title:'Team Play',icon:'🤝',collapsed:false,items:[
+        {id:'gsi5',text:'Nicht zu defensiv spielen',sub:'',proficiency:null},
+        {id:'gsi6',text:'Ruhig mit Team pushen wenn unsicher',sub:'Lieber langsamer oder Ability nutzen statt solo',proficiency:null},
+        {id:'gsi7',text:'Kein unnötiger Dog wenn Space geclearet',sub:'',proficiency:null},
+        {id:'gsi8',text:'Fokus halten',sub:'AFK wenn Mates sterben ist nicht akzeptabel',proficiency:null},
+      ]},
+    ],
+    abilities: [
+      {id:'ab1',title:'Dog (Entry-Ability)',icon:'🐕',collapsed:false,items:[
+        {id:'abi1',text:'Dog = Entry Tool — schicken, dann sofort mitpushen',sub:'Dog ohne Push danach = useless',proficiency:null},
+        {id:'abi2',text:'Nicht für Attack nutzen wenn du nicht pushst',sub:'',proficiency:null},
+        {id:'abi3',text:'Richtig clearen mit Dog',sub:'Abilities für Info nutzen, nicht für direkten Kill',proficiency:null},
+      ]},
+      {id:'ab2',title:'Reveal / Smoke',icon:'💨',collapsed:false,items:[
+        {id:'abi4',text:'Reveal für Entry nutzen',sub:'Hinter Gegner schmeißen für Infovorteil',proficiency:null},
+        {id:'abi5',text:'Timing beachten',sub:'Nicht zu früh, nicht zu spät',proficiency:null},
+        {id:'abi6',text:'Ult sinnvoll nutzen',sub:'Nur wenn Smokes vorhanden — sonst situationsbedingt useless',proficiency:null},
+      ]},
+      {id:'ab3',title:'Allgemeine Regeln',icon:'⚠️',collapsed:false,items:[
+        {id:'abi7',text:'Nicht mit Ability peeken',sub:'Erst Ability, dann warten, dann peeken',proficiency:null},
+        {id:'abi8',text:'Abilities nicht dumm verschwenden',sub:'',proficiency:null},
+        {id:'abi9',text:'Kein Ability-Einsatz wenn Space schon geclearet',sub:'',proficiency:null},
+      ]},
+    ],
+  },
+  warmup: [
+    {id:'wp1',phase:'Phase 1 — Aimlabs',icon:'🎮',time:'~10–15 MIN',items:[
+      {id:'wi1',name:'Aimstars 2.0',note:'Ersten 2 Aufgaben absolvieren',priority:false},
+      {id:'wi2',name:'Jessies Warmup',note:'1 Aufgabe',priority:false},
+      {id:'wi3',name:'Ascent A Site — Crosshair Placement',note:'Spezifisches Crosshair Placement Training',priority:false},
+      {id:'wi4',name:'Micro Flicks von A Site Heaven',note:'Mehrmals wiederholen bis es sich gut anfühlt',priority:true},
+    ]},
+    {id:'wp2',phase:'Phase 2 — Deathmatch',icon:'⚔️',time:'~10 MIN',items:[
+      {id:'wi5',name:'Pre-aimen beim Peeken',note:'Crosshair schon auf dem Angle platzieren',priority:false},
+      {id:'wi6',name:'Strafen mit einzelnen Schüssen',note:'Bewegen → stoppen → einzelner Schuss → weiter',priority:false},
+      {id:'wi7',name:'Deckung nutzen',note:'Aktiv Objekte verwenden, nie offen stehen',priority:false},
+    ]},
+  ],
+  sessions: [
+    {id:'ses1',num:1,label:'Session 1',rating:'bad',ratingText:'VIEL ZU VERBESSERN',notes:[
+      {id:'sn1',type:'neg',round:null,text:'Kein Buy nach Runde 1 verloren — Tab nicht gecheckt'},
+      {id:'sn2',type:'neg',round:null,text:'Pre-aimen vergessen beim Peeken'},
+      {id:'sn3',type:'neg',round:null,text:'Overreveal — zu offen gestanden'},
+      {id:'sn4',type:'neg',round:null,text:'Unnötiger Dog obwohl Space schon geclearet'},
+      {id:'sn5',type:'neg',round:null,text:'Dog für Attack statt für Info genutzt'},
+      {id:'sn6',type:'neg',round:null,text:'Run and Gun'},
+      {id:'sn7',type:'tip',round:null,text:'Focus: Passive Aim + Hindernisse aktiv nutzen'},
+    ]},
+    {id:'ses2',num:2,label:'Session 2',rating:'bad',ratingText:'FOKUS PROBLEM',notes:[
+      {id:'sn8',type:'neg',round:null,text:'Kein Fokus — halbe Stunde AFK während Mates starben. Größtes Problem.'},
+      {id:'sn9',type:'pos',round:'5',text:'Solide Runde gespielt'},
+      {id:'sn10',type:'neg',round:'6',text:'Overrevealed + kein Slice the Pie + blind rein gepeeked ohne Info'},
+      {id:'sn11',type:'pos',round:'6',text:'Gute Ult genutzt (Timing ok)'},
+      {id:'sn12',type:'neg',round:'7',text:'Insane Flank aber keine Zeit gelassen — zu schnell rein'},
+      {id:'sn13',type:'pos',round:'8',text:'Guten Angle mit Confidence gehalten'},
+      {id:'sn14',type:'neg',round:'8',text:'Overpeeked am Ende'},
+      {id:'sn15',type:'neg',round:'10',text:'Ult genutzt aber keine Smokes → useless'},
+      {id:'sn16',type:'neg',round:'11',text:'Operator Dog genutzt ohne danach zu pushen → useless'},
+      {id:'sn17',type:'neg',round:'12',text:'Karte nicht geschaut — in die Mitte gestarrt'},
+    ]},
+  ],
+};
+
+// ================================================================
+// STATE
+// ================================================================
+// ================================================================
+// TWO-LAYER STATE
+//   coachingData  → GitHub data.json  (Ove's content)
+//   myProgress    → localStorage      (BaronBlood's badges)
+// ================================================================
+const PROGRESS_KEY = 'val-progress-v1';
+const GH_CONFIG_KEY = 'val-gh-config-v1';
+
+let state = null;           // merged view (coachingData + myProgress)
+let coachingData = null;    // raw content from GitHub / DEFAULT_DATA
+let myProgress = {};        // {itemId: 'red'|'yellow'|'green'|null}
+let ghConfig = null;        // {owner, repo, branch, token, sha}
+let ghSaving = false;
+
+let editMode = false, currentPage = 'dashboard';
+let itemIndex = {};
+let _modalSubmit = null;
+let _idCtr = Date.now();
+
+function genId(p){ return p+'_'+(++_idCtr); }
+
+// ---- Progress (badges) ----
+function loadProgress(){
+  try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY)||'{}'); }
+  catch(e){ return {}; }
+}
+function saveProgress(){
+  localStorage.setItem(PROGRESS_KEY, JSON.stringify(myProgress));
+}
+
+// ---- GitHub config ----
+function loadGhConfig(){
+  try{ return JSON.parse(localStorage.getItem(GH_CONFIG_KEY)||'null'); }
+  catch(e){ return null; }
+}
+function saveGhConfig(cfg){
+  localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
+  ghConfig = cfg;
+}
+
+// ---- Merge coaching data + progress into state ----
+function mergeState(){
+  // deep clone coachingData, then apply myProgress badges
+  state = JSON.parse(JSON.stringify(coachingData));
+  function applyBadge(item){
+    item.proficiency = myProgress[item.id] ?? item.proficiency ?? null;
+  }
+  state.fehler.forEach(applyBadge);
+  Object.values(state.skills).forEach(secs=>secs.forEach(sec=>sec.items.forEach(applyBadge)));
+  buildIndex();
+}
+
+// ---- Strip proficiency before saving to GitHub ----
+function stripProgress(data){
+  const d = JSON.parse(JSON.stringify(data));
+  d.fehler.forEach(i=>{ delete i.proficiency; });
+  Object.values(d.skills).forEach(secs=>secs.forEach(sec=>sec.items.forEach(i=>{ delete i.proficiency; })));
+  return d;
+}
+
+// ---- Sync coachingData from state (edit mode changes) ----
+function syncCoachingFromState(){
+  coachingData = stripProgress(state);
+}
+
+// ---- Load coaching data from GitHub ----
+async function loadCoachingData(){
+  ghConfig = loadGhConfig();
+  if(ghConfig && ghConfig.owner && ghConfig.repo){
+    try{
+      const branch = ghConfig.branch||'main';
+      const url = `https://raw.githubusercontent.com/${ghConfig.owner}/${ghConfig.repo}/${branch}/data.json?t=${Date.now()}`;
+      const res = await fetch(url);
+      if(res.ok){
+        const data = await res.json();
+        coachingData = data;
+        updateSyncStatus('synced');
+        return;
+      }
+    }catch(e){ console.warn('GitHub fetch failed, using default data', e); }
+    updateSyncStatus('error');
+  } else {
+    updateSyncStatus('local');
+  }
+  coachingData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+// ---- Save to GitHub ----
+async function saveToGitHub(){
+  if(!ghConfig || !ghConfig.token || !ghConfig.owner || !ghConfig.repo){
+    openGhSettings();
+    return;
+  }
+  if(ghSaving) return;
+  ghSaving = true;
+  updateSyncStatus('saving');
+  syncCoachingFromState();
+
+  try{
+    const branch = ghConfig.branch||'main';
+    const apiUrl = `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/data.json`;
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(coachingData, null, 2))));
+
+    // get current sha
+    let sha = null;
+    try{
+      const r = await fetch(apiUrl+'?ref='+branch, {headers:{'Authorization':'token '+ghConfig.token,'Accept':'application/vnd.github.v3+json'}});
+      if(r.ok){ const j=await r.json(); sha=j.sha; }
+    }catch(e){}
+
+    const body = {message:`coaching update ${new Date().toLocaleDateString('de-DE')}`,content,branch};
+    if(sha) body.sha = sha;
+
+    const res = await fetch(apiUrl, {
+      method:'PUT',
+      headers:{'Authorization':'token '+ghConfig.token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+      body: JSON.stringify(body)
+    });
+
+    if(res.ok){
+      updateSyncStatus('synced');
+      showToast('✓ Gespeichert auf GitHub');
+    } else {
+      const err = await res.json();
+      updateSyncStatus('error');
+      showToast('❌ Fehler: '+(err.message||res.status));
+    }
+  }catch(e){
+    updateSyncStatus('error');
+    showToast('❌ Netzwerk-Fehler');
+  }
+  ghSaving = false;
+}
+
+// ---- saveState: routes to correct storage ----
+function saveState(){
+  // proficiency changes → only localStorage
+  Object.values(itemIndex).forEach(en=>{
+    if(en.item.proficiency !== undefined){
+      if(en.item.proficiency !== null)
+        myProgress[en.item.id] = en.item.proficiency;
+      else
+        delete myProgress[en.item.id];
+    }
+  });
+  saveProgress();
+  buildIndex();
+}
+
+function saveStateAndSync(){
+  // coaching content changed (edit mode) → also flag for GitHub save
+  saveState();
+  syncCoachingFromState();
+}
+
+// ---- UI helpers ----
+function updateSyncStatus(status){
+  const el = document.getElementById('sync-status');
+  if(!el) return;
+  const map = {
+    local:  {t:'LOCAL',c:'#6B7A8D'},
+    synced: {t:'SYNCED ✓',c:'var(--green)'},
+    saving: {t:'SPEICHERN...',c:'var(--yellow)'},
+    error:  {t:'SYNC ERROR',c:'var(--red)'},
+  };
+  const s = map[status]||map.local;
+  el.textContent = s.t;
+  el.style.color = s.c;
+}
+
+function showToast(msg){
+  let t = document.getElementById('toast');
+  if(!t){ t=document.createElement('div'); t.id='toast'; t.style.cssText='position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:Share Tech Mono,monospace;font-size:11px;padding:10px 18px;z-index:999;letter-spacing:1px;transition:opacity .3s'; document.body.appendChild(t); }
+  t.textContent=msg; t.style.opacity='1';
+  clearTimeout(t._to); t._to=setTimeout(()=>t.style.opacity='0',2500);
+}
+
+function resetState(){
+  if(!confirm('Fortschritt (Badges) zurücksetzen?')) return;
+  myProgress = {};
+  saveProgress();
+  mergeState();
+  renderContent();
+}
+
+function openGhSettings(){
+  const cfg = ghConfig||{};
+  openModal('GitHub Verbindung einrichten',`
+    <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;line-height:1.7">
+      Einmalig einrichten. Danach speichert Ove Änderungen direkt auf GitHub — BaronBlood sieht sie nach einem Refresh automatisch.<br><br>
+      <b style="color:var(--text)">Token erstellen:</b> GitHub → Settings → Developer settings → Personal access tokens → Fine-grained token → nur <code style="background:var(--bg);padding:1px 5px;color:var(--red)">Contents: Read & Write</code> für dieses Repo.
+    </p>
+    <div class="form-group"><label>GitHub Username / Org</label><input id="m-owner" value="${esc(cfg.owner||'')}" placeholder="z.B. baronblood"/></div>
+    <div class="form-group"><label>Repository Name</label><input id="m-repo" value="${esc(cfg.repo||'')}" placeholder="z.B. val-coaching"/></div>
+    <div class="form-group"><label>Branch</label><input id="m-branch" value="${esc(cfg.branch||'main')}" placeholder="main"/></div>
+    <div class="form-group"><label>Personal Access Token <span style="color:var(--text-dim)">(nur in deinem Browser gespeichert)</span></label><input id="m-token" type="password" value="${esc(cfg.token||'')}" placeholder="github_pat_..."/></div>`,
+  async ()=>{
+    const newCfg={owner:mval('m-owner'),repo:mval('m-repo'),branch:mval('m-branch')||'main',token:mval('m-token')};
+    if(!newCfg.owner||!newCfg.repo||!newCfg.token){ showToast('❌ Bitte alle Felder ausfüllen'); return; }
+    saveGhConfig(newCfg);
+    closeModal();
+    showToast('⏳ Verbinde mit GitHub...');
+    await loadCoachingData();
+    mergeState();
+    renderContent();
+  });
+  document.querySelector('.modal-footer .btn-primary').textContent = 'VERBINDEN';
+}
+
+// ================================================================
+// INDEX
+// ================================================================
+function buildIndex(){
+  itemIndex = {};
+  state.fehler.forEach(i => itemIndex[i.id] = {item:i,type:'fehler'});
+  Object.entries(state.skills).forEach(([key,secs]) => {
+    secs.forEach(sec => {
+      itemIndex[sec.id] = {item:sec,type:'section',skillKey:key};
+      sec.items.forEach(i => itemIndex[i.id] = {item:i,type:'skill-item',sectionId:sec.id,skillKey:key});
+    });
+  });
+  state.warmup.forEach(ph => {
+    itemIndex[ph.id] = {item:ph,type:'warmup-phase'};
+    ph.items.forEach(i => itemIndex[i.id] = {item:i,type:'warmup-item',phaseId:ph.id});
+  });
+  state.sessions.forEach(ses => {
+    itemIndex[ses.id] = {item:ses,type:'session'};
+    ses.notes.forEach(n => itemIndex[n.id] = {item:n,type:'session-note',sessionId:ses.id});
+  });
+}
+
+// ================================================================
+// PROFICIENCY
+// ================================================================
+const PROF_CYCLE = [null,'red','yellow','green'];
+function cycleProficiency(cur){ const i=PROF_CYCLE.indexOf(cur); return PROF_CYCLE[(i+1)%PROF_CYCLE.length]; }
+function profBadge(prof, id){
+  const C={null:{l:'—',c:'prof-none'},red:{l:'Üben',c:'prof-red'},yellow:{l:'Okay',c:'prof-yellow'},green:{l:'Gut',c:'prof-green'}};
+  const cfg=C[prof]||C[null];
+  return `<span class="prof-badge ${cfg.c}" data-action="cycle-prof" data-id="${id}" title="Klicken um Fortschritt zu ändern">${cfg.l}</span>`;
+}
+
+// ================================================================
+// NAV
+// ================================================================
+const NAV=[
+  {g:'',items:[{id:'dashboard',label:'Dashboard',icon:'◈'}]},
+  {g:'Übersicht',items:[{id:'fehler',label:'Häufigste Fehler',icon:'⚠'}]},
+  {g:'Skills',items:[
+    {id:'mechanics',label:'Mechanics',icon:'🎯'},
+    {id:'movement',label:'Movement',icon:'⚡'},
+    {id:'gamesense',label:'Game Sense',icon:'🧠'},
+    {id:'abilities',label:'Abilities',icon:'🔮'},
+  ]},
+  {g:'Training',items:[
+    {id:'warmup',label:'Aufwärm-Routine',icon:'🔥'},
+    {id:'sessions',label:'Session-Notizen',icon:'📋'},
+  ]},
+];
+
+function renderNav(){
+  document.getElementById('sidebar').innerHTML = NAV.map(g=>`
+    <div class="nav-group">${g.g}</div>
+    <ul>${g.items.map(it=>`
+      <li><a class="${it.id===currentPage?'active':''}" onclick="showPage('${it.id}')">
+        <span class="nav-icon">${it.icon}</span>${it.label}
+      </a></li>`).join('')}</ul>
+  `).join('');
+}
+
+function showPage(id){ currentPage=id; renderNav(); renderContent(); }
+
+// ================================================================
+// UTILS
+// ================================================================
+function esc(s){
+  if(!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function editBanner(){
+  return editMode ? `<div class="edit-banner">EDIT MODE AKTIV — Elemente können hinzugefügt, bearbeitet und gelöscht werden</div>` : '';
+}
+
+const profLegend = `<div class="prof-legend">
+  <span class="prof-badge prof-none" style="cursor:default">—</span> Offen &nbsp;
+  <span class="prof-badge prof-red" style="cursor:default">Üben</span> Noch nicht da &nbsp;
+  <span class="prof-badge prof-yellow" style="cursor:default">Okay</span> Wird besser &nbsp;
+  <span class="prof-badge prof-green" style="cursor:default">Gut</span> Sitzt — auf Badge klicken zum Ändern
+</div>`;
+
+// ================================================================
+// RENDER PAGES
+// ================================================================
+function renderContent(){
+  const el = document.getElementById('content');
+  let html = '';
+  if(currentPage==='dashboard') html = renderDashboard();
+  else if(currentPage==='fehler') html = renderFehler();
+  else if(currentPage==='warmup') html = renderWarmup();
+  else if(currentPage==='sessions') html = renderSessions();
+  else if(state.skills[currentPage]) html = renderSkills(currentPage);
+  else html = '<p style="color:var(--text-dim);padding:40px">Nicht gefunden</p>';
+  el.innerHTML = `<div class="content-wrap">${html}</div>`;
+}
+
+// — DASHBOARD —
+function computeStats(){
+  // collect all proficiency-bearing items
+  const allItems = [];
+  Object.entries(state.skills).forEach(([key,secs])=>{
+    const labels={mechanics:'Mechanics',movement:'Movement',gamesense:'Game Sense',abilities:'Abilities'};
+    secs.forEach(sec=>sec.items.forEach(it=>allItems.push({...it,cat:labels[key]||key,catKey:key})));
+  });
+  state.fehler.forEach(f=>allItems.push({...f,cat:'Fehler',catKey:'fehler',text:f.name}));
+
+  const total=allItems.length;
+  const counts={null:0,red:0,yellow:0,green:0};
+  allItems.forEach(i=>{ counts[i.proficiency]=(counts[i.proficiency]||0)+1; });
+
+  // per-skill breakdown
+  const skillKeys=['mechanics','movement','gamesense','abilities'];
+  const skillLabels={mechanics:'Mechanics',movement:'Movement',gamesense:'Game Sense',abilities:'Abilities'};
+  const skillStats = skillKeys.map(key=>{
+    const items=[];
+    (state.skills[key]||[]).forEach(sec=>sec.items.forEach(i=>items.push(i)));
+    const green=items.filter(i=>i.proficiency==='green').length;
+    const total=items.length;
+    return {key,label:skillLabels[key],green,total,pct:total?Math.round(green/total*100):0};
+  });
+
+  // focus items: red first, then yellow, max 7
+  const focus = allItems
+    .filter(i=>i.proficiency==='red'||i.proficiency==='yellow')
+    .sort((a,b)=>{ if(a.proficiency===b.proficiency) return 0; return a.proficiency==='red'?-1:1; })
+    .slice(0,7);
+
+  // recent session
+  const recent = state.sessions.length ? state.sessions[state.sessions.length-1] : null;
+
+  return {allItems,total,counts,skillStats,focus,recent};
+}
+
+function donutSVG(counts,total){
+  const vals=[
+    {c:'#FF4655',v:counts.red||0},
+    {c:'#F5A623',v:counts.yellow||0},
+    {c:'#50FA7B',v:counts.green||0},
+    {c:'#2A3D52',v:counts[null]||0},
+  ];
+  const r=38,cx=44,cy=44,stroke=10;
+  const circ=2*Math.PI*r;
+  let offset=0;
+  const slices=vals.map(({c,v})=>{
+    const pct=total?v/total:0;
+    const dash=pct*circ;
+    const gap=circ-dash;
+    const s=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="${stroke}" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-dashoffset="${(-offset*circ/1).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset+=pct;
+    return s;
+  }).join('');
+  const green=counts.green||0;
+  const pct=total?Math.round(green/total*100):0;
+  return `<svg class="donut-svg" width="88" height="88" viewBox="0 0 88 88">
+    <circle cx="44" cy="44" r="${r}" fill="none" stroke="#1E2D3D" stroke-width="${stroke}"/>
+    ${slices}
+    <text x="44" y="40" text-anchor="middle" fill="#fff" font-family="Rajdhani,sans-serif" font-size="16" font-weight="700">${pct}%</text>
+    <text x="44" y="53" text-anchor="middle" fill="#6B7A8D" font-family="Share Tech Mono,monospace" font-size="7">GUT</text>
+  </svg>`;
+}
+
+function skillBarColor(pct){
+  if(pct>=70) return 'var(--green)';
+  if(pct>=35) return 'var(--yellow)';
+  return 'var(--red)';
+}
+
+function renderDashboard(){
+  const {total,counts,skillStats,focus,recent,allItems}=computeStats();
+  const critFehler=state.fehler.filter(f=>f.level==='crit'&&f.proficiency!=='green').length;
+  const sessions=state.sessions.length;
+  const lastRating=recent?({bad:'❌',ok:'🟡',good:'✅'}[recent.rating]||''):'—';
+
+  // stat tiles
+  const tiles=`
+    <div class="db-grid-top">
+      <div class="db-stat c-red">
+        <div class="db-stat-label">Noch zu üben</div>
+        <div class="db-stat-val c-red">${counts.red||0}</div>
+        <div class="db-stat-sub">von ${total} Skills</div>
+        <div class="db-stat-accent"></div>
+      </div>
+      <div class="db-stat c-yellow">
+        <div class="db-stat-label">Wird besser</div>
+        <div class="db-stat-val c-yellow">${counts.yellow||0}</div>
+        <div class="db-stat-sub">von ${total} Skills</div>
+        <div class="db-stat-accent"></div>
+      </div>
+      <div class="db-stat c-green">
+        <div class="db-stat-label">Sitzt</div>
+        <div class="db-stat-val c-green">${counts.green||0}</div>
+        <div class="db-stat-sub">von ${total} Skills</div>
+        <div class="db-stat-accent"></div>
+      </div>
+      <div class="db-stat c-blue">
+        <div class="db-stat-label">Sessions</div>
+        <div class="db-stat-val">${sessions}</div>
+        <div class="db-stat-sub">Letzte: ${lastRating} ${recent?esc(recent.ratingText):'—'}</div>
+        <div class="db-stat-accent"></div>
+      </div>
+    </div>`;
+
+  // skill progress bars + donut
+  const bars=skillStats.map(s=>`
+    <div class="skill-bar-row">
+      <div class="skill-bar-label">${s.label}</div>
+      <div class="skill-bar-track">
+        <div class="skill-bar-fill" style="width:${s.pct}%;background:${skillBarColor(s.pct)}"></div>
+      </div>
+      <div class="skill-bar-pct" style="color:${skillBarColor(s.pct)}">${s.pct}%</div>
+    </div>`).join('');
+
+  const donut=donutSVG(counts,total);
+
+  const midLeft=`
+    <div class="db-card">
+      <div class="db-card-title">Fortschritt pro Bereich <span onclick="showPage('mechanics')" style="cursor:pointer;color:var(--red)">Details →</span></div>
+      ${bars}
+    </div>`;
+
+  const midRight=`
+    <div class="db-card">
+      <div class="db-card-title">Gesamt-Überblick</div>
+      <div class="donut-wrap">
+        ${donut}
+        <div class="donut-legend">
+          <div class="donut-leg-item"><div class="donut-leg-dot" style="background:var(--red)"></div><span style="color:var(--text-dim);font-size:12px">Üben <b style="color:var(--text)">${counts.red||0}</b></span></div>
+          <div class="donut-leg-item"><div class="donut-leg-dot" style="background:var(--yellow)"></div><span style="color:var(--text-dim);font-size:12px">Okay <b style="color:var(--text)">${counts.yellow||0}</b></span></div>
+          <div class="donut-leg-item"><div class="donut-leg-dot" style="background:var(--green)"></div><span style="color:var(--text-dim);font-size:12px">Gut <b style="color:var(--text)">${counts.green||0}</b></span></div>
+          <div class="donut-leg-item"><div class="donut-leg-dot" style="background:var(--border)"></div><span style="color:var(--text-dim);font-size:12px">Offen <b style="color:var(--text)">${counts[null]||0}</b></span></div>
+        </div>
+      </div>
+      ${critFehler>0?`<div style="margin-top:14px;padding:8px 10px;background:var(--red-dim);border:1px solid rgba(255,70,85,0.2);font-size:11px;color:var(--red);font-family:'Share Tech Mono',monospace;letter-spacing:1px">⚠ ${critFehler} KRITISCHE FEHLER NOCH NICHT GUT</div>`:'<div style="margin-top:14px;padding:8px 10px;background:var(--green-dim);border:1px solid rgba(80,250,123,0.2);font-size:11px;color:var(--green);font-family:\'Share Tech Mono\',monospace;letter-spacing:1px">✓ ALLE KRITISCHEN FEHLER UNTER KONTROLLE</div>'}
+    </div>`;
+
+  // focus list
+  const focusRows=focus.length?focus.map(it=>`
+    <div class="focus-item">
+      <div class="focus-dot ${it.proficiency==='red'?'r':'y'}"></div>
+      <div class="focus-item-text">${esc(it.text||it.name)}</div>
+      <div class="focus-item-cat">${esc(it.cat)}</div>
+    </div>`).join(''):`<div style="font-size:12px;color:var(--text-dim);padding:12px 0">Alles auf Grün — nichts zu fokussieren 🎉</div>`;
+
+  const botLeft=`
+    <div class="db-card">
+      <div class="db-card-title">Aktueller Fokus <span style="color:var(--text-dim)">${focus.length} Items</span></div>
+      ${focusRows}
+    </div>`;
+
+  // recent session
+  let sesContent='<div style="font-size:12px;color:var(--text-dim);padding:12px 0">Noch keine Sessions eingetragen.</div>';
+  if(recent){
+    const notes=recent.notes.slice(-5).map(n=>`
+      <div class="ses-mini-row">
+        <div class="ses-mini-badge ${n.type}">${{neg:'FEHLER',pos:'GUT',tip:'FOCUS'}[n.type]||n.type}</div>
+        <div class="ses-mini-text">${esc(n.text)}</div>
+      </div>`).join('');
+    sesContent=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--red)">${String(recent.num).padStart(2,'0')}</div>
+      <div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#fff">${esc(recent.label)}</div>
+        <div class="session-rating ${recent.rating}" style="display:inline-block;margin-top:3px">${esc(recent.ratingText)}</div>
+      </div>
+    </div>${notes}
+    <div style="margin-top:10px;font-size:11px;font-family:'Share Tech Mono',monospace;color:var(--red);cursor:pointer;letter-spacing:1px" onclick="showPage('sessions')">ALLE SESSIONS ANZEIGEN →</div>`;
+  }
+
+  const botRight=`
+    <div class="db-card">
+      <div class="db-card-title">Letzte Session</div>
+      ${sesContent}
+    </div>`;
+
+  // quick nav
+  const qnav=`
+    <div class="db-card" style="margin-top:10px">
+      <div class="db-card-title">Schnell zu</div>
+      <div class="qnav-grid">
+        <div class="qnav-tile" onclick="showPage('fehler')"><div class="qnav-tile-icon">⚠</div><div class="qnav-tile-label">Fehler</div></div>
+        <div class="qnav-tile" onclick="showPage('mechanics')"><div class="qnav-tile-icon">🎯</div><div class="qnav-tile-label">Mechanics</div></div>
+        <div class="qnav-tile" onclick="showPage('warmup')"><div class="qnav-tile-icon">🔥</div><div class="qnav-tile-label">Warmup</div></div>
+        <div class="qnav-tile" onclick="showPage('sessions')"><div class="qnav-tile-icon">📋</div><div class="qnav-tile-label">Sessions</div></div>
+      </div>
+    </div>`;
+
+  return `
+    <div class="db-greeting">
+      <div class="db-greeting-sub">// COACHING DASHBOARD</div>
+      <div class="db-greeting-name">BaronBlood</div>
+      <div class="db-greeting-desc">Dein aktueller Trainingsstand auf einen Blick — Badge in den Skills anklicken um Fortschritt zu setzen.</div>
+    </div>
+    ${tiles}
+    <div class="db-grid-mid">${midLeft}${midRight}</div>
+    <div class="db-grid-bot">${botLeft}${botRight}</div>
+    ${qnav}`;
+}
+
+// — FEHLER —
+function renderFehler(){
+  const cards = state.fehler.map(f=>`
+    <div class="error-card ${esc(f.level)}" style="position:relative">
+      ${editMode?`<button class="del-btn" data-action="delete-fehler" data-id="${f.id}" title="Löschen">✕</button>`:''}
+      <div class="error-card-top">
+        <div>
+          <div class="error-level">${{crit:'KRITISCH',high:'HOCH',med:'MITTEL'}[f.level]||f.level}</div>
+          <div class="error-name">${esc(f.name)}</div>
+        </div>
+        ${profBadge(f.proficiency, f.id)}
+      </div>
+      <div class="error-desc">${esc(f.desc)}</div>
+    </div>`).join('');
+  return `
+    <div class="section-header">
+      <div class="section-tag">// PRIORITY ERRORS</div>
+      <div class="section-title">Häufigste Fehler</div>
+      <div class="section-desc">Die Fehler die am meisten Runden kosten. Badge anklicken um Fortschritt zu setzen.</div>
+    </div>
+    ${editBanner()}
+    ${profLegend}
+    <div class="error-grid">${cards}</div>
+    ${editMode?`<button class="add-card-btn" data-action="add-fehler">+ Neuer Fehler</button>`:''}`;
+}
+
+// — SKILLS —
+const SKILL_META={
+  mechanics:{tag:'// MECHANICS',title:'Mechanics',desc:'Grundlegende Aim- und Schuss-Mechaniken.'},
+  movement:{tag:'// MOVEMENT',title:'Movement',desc:'Positionierung, Peeken und Bewegung.'},
+  gamesense:{tag:'// GAME SENSE',title:'Game Sense',desc:'Map-Awareness, Economy, Team-Coordination.'},
+  abilities:{tag:'// ABILITIES',title:'Abilities',desc:'Korrekte Ability-Nutzung — für Info, nicht Schaden.'},
+};
+
+function renderSkills(key){
+  const m = SKILL_META[key];
+  const blocks = state.skills[key].map(sec=>{
+    const items = sec.items.map(it=>`
+      <div class="rule-item">
+        <div class="rule-dot"></div>
+        <div class="rule-item-content">
+          <div class="rule-text">${esc(it.text)}</div>
+          ${it.sub?`<div class="rule-sub">${esc(it.sub)}</div>`:''}
+        </div>
+        <div class="rule-item-actions">
+          ${profBadge(it.proficiency, it.id)}
+          ${editMode?`<button class="del-btn-sm" data-action="delete-skill-item" data-id="${it.id}" title="Löschen">✕</button>`:''}
+        </div>
+      </div>`).join('');
+    return `
+      <div class="rule-block">
+        <div class="rule-block-header" data-action="toggle-block" data-id="${sec.id}">
+          ${esc(sec.icon)} ${esc(sec.title)}
+          ${editMode?`<button class="del-btn-sm" data-action="delete-section" data-id="${sec.id}" title="Block löschen" style="margin-left:auto;margin-right:8px">✕ Block</button>`:''}
+          <span class="block-chevron ${sec.collapsed?'collapsed':''}">▾</span>
+        </div>
+        <div class="rule-block-body ${sec.collapsed?'hidden':''}">
+          ${items}
+          ${editMode?`<div class="add-item-row"><button class="add-item-btn" data-action="add-skill-item" data-section-id="${sec.id}">+ Hinzufügen</button></div>`:''}
+        </div>
+      </div>`;
+  }).join('');
+  return `
+    <div class="section-header">
+      <div class="section-tag">${m.tag}</div>
+      <div class="section-title">${m.title}</div>
+      <div class="section-desc">${m.desc}</div>
+    </div>
+    ${editBanner()}
+    ${profLegend}
+    <div class="rule-blocks-grid">${blocks}</div>
+    ${editMode?`<button class="add-card-btn" data-action="add-section" data-skill-key="${key}">+ Neuer Block</button>`:''}`;
+}
+
+// — WARMUP —
+function renderWarmup(){
+  const phases = state.warmup.map(ph=>{
+    const tasks = ph.items.map((it,idx)=>`
+      <div class="warmup-task">
+        <div class="task-num">${String(idx+1).padStart(2,'0')}</div>
+        <div class="task-body">
+          <div class="task-name">${esc(it.name)}</div>
+          ${it.note?`<div class="task-note">${esc(it.note)}</div>`:''}
+          ${it.priority?`<div class="task-priority">!! PRIORITY !!</div>`:''}
+        </div>
+        ${editMode?`<button class="del-btn-sm" data-action="delete-warmup-item" data-id="${it.id}" title="Löschen">✕</button>`:''}
+      </div>`).join('');
+    return `
+      <div class="warmup-phase">
+        <div class="warmup-phase-header">
+          <div class="warmup-icon">${esc(ph.icon)}</div>
+          <div>
+            <div class="warmup-title">${esc(ph.phase)}</div>
+            <div class="warmup-subtitle">Aufwärmphase</div>
+          </div>
+          <div class="warmup-time">${esc(ph.time)}</div>
+          ${editMode?`<button class="del-btn-sm" data-action="delete-warmup-phase" data-id="${ph.id}" style="margin-left:12px">✕ Phase</button>`:''}
+        </div>
+        ${tasks}
+        ${editMode?`<div class="add-item-row"><button class="add-item-btn" data-action="add-warmup-item" data-phase-id="${ph.id}">+ Übung hinzufügen</button></div>`:''}
+      </div>`;
+  }).join('');
+  return `
+    <div class="section-header">
+      <div class="section-tag">// WARMUP ROUTINE</div>
+      <div class="section-title">Aufwärm-Routine</div>
+      <div class="section-desc">Vor jeder Session in dieser Reihenfolge durchführen.</div>
+    </div>
+    ${editBanner()}
+    ${phases}
+    ${editMode?`<button class="add-card-btn" data-action="add-warmup-phase">+ Neue Phase</button>`:''}`;
+}
+
+// — SESSIONS —
+function renderSessions(){
+  const cards = state.sessions.map(ses=>{
+    const notes = ses.notes.map(n=>`
+      <div class="session-note">
+        <div class="note-type ${n.type}">${{neg:'FEHLER',pos:'GUT',tip:'FOCUS'}[n.type]||n.type}</div>
+        ${n.round?`<div class="note-round">R${esc(n.round)}</div>`:''}
+        <div class="note-text">${esc(n.text)}</div>
+        ${editMode?`<button class="del-btn-sm" data-action="delete-session-note" data-id="${n.id}" title="Löschen">✕</button>`:''}
+      </div>`).join('');
+    return `
+      <div class="session-card">
+        <div class="session-header">
+          <div class="session-num">${String(ses.num).padStart(2,'0')}</div>
+          <div>
+            <div class="session-label">${esc(ses.label)}</div>
+            <div class="session-coach">COACH: OVE</div>
+          </div>
+          <div class="session-rating ${ses.rating}">${esc(ses.ratingText)}</div>
+          ${editMode?`<button class="del-btn-sm" data-action="delete-session" data-id="${ses.id}" style="margin-left:10px">✕ Session</button>`:''}
+        </div>
+        ${notes}
+        ${editMode?`<div class="add-item-row"><button class="add-item-btn" data-action="add-session-note" data-session-id="${ses.id}">+ Notiz hinzufügen</button></div>`:''}
+      </div>`;
+  }).join('');
+  return `
+    <div class="section-header">
+      <div class="section-tag">// SESSION NOTES</div>
+      <div class="section-title">Session-Notizen</div>
+      <div class="section-desc">Fortschritt über Zeit — jede Session festhalten.</div>
+    </div>
+    ${editBanner()}
+    ${cards}
+    ${editMode?`<button class="add-card-btn" data-action="add-session">+ Neue Session</button>`:''}`;
+}
+
+// ================================================================
+// EDIT MODE
+// ================================================================
+function toggleEditMode(){
+  editMode = !editMode;
+  document.getElementById('edit-toggle').classList.toggle('active', editMode);
+  document.getElementById('edit-icon').textContent = editMode ? '🔓' : '🔒';
+  document.getElementById('edit-label').textContent = editMode ? 'EDITING...' : 'EDIT MODE';
+  document.getElementById('save-gh-btn').style.display = editMode ? 'flex' : 'none';
+  renderContent();
+}
+
+// ================================================================
+// MODAL
+// ================================================================
+function openModal(title, bodyHtml, onSubmit){
+  _modalSubmit = onSubmit;
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHtml;
+  document.getElementById('modal-overlay').classList.remove('hidden');
+  setTimeout(()=>{ const f=document.querySelector('#modal-body input,#modal-body select,#modal-body textarea'); if(f) f.focus(); },50);
+}
+function closeModal(){ document.getElementById('modal-overlay').classList.add('hidden'); _modalSubmit=null; }
+function submitModal(){ if(_modalSubmit) _modalSubmit(); }
+function mval(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
+function mchk(id){ const e=document.getElementById(id); return e?e.checked:false; }
+
+const PROF_SELECT = `
+  <div class="form-group">
+    <label>Fortschritt</label>
+    <select id="m-prof">
+      <option value="">— Offen</option>
+      <option value="red">🔴 Üben — Passiert noch</option>
+      <option value="yellow">🟡 Okay — Wird besser</option>
+      <option value="green">🟢 Gut — Sitzt</option>
+    </select>
+  </div>`;
+
+// ================================================================
+// EVENT HANDLING
+// ================================================================
+function handleClick(e){
+  const btn = e.target.closest('[data-action]');
+  if(!btn) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
+
+  // PROFICIENCY CYCLE
+  if(action==='cycle-prof'){
+    const en = itemIndex[id];
+    if(en){ en.item.proficiency = cycleProficiency(en.item.proficiency); saveState(); renderContent(); }
+    return;
+  }
+
+  // TOGGLE BLOCK
+  if(action==='toggle-block'){
+    const en = itemIndex[id];
+    if(en){ en.item.collapsed = !en.item.collapsed; saveState(); renderContent(); }
+    return;
+  }
+
+  // ---- ADD ----
+  if(action==='add-fehler'){
+    openModal('Neuer Fehler',`
+      <div class="form-group"><label>Level</label>
+        <select id="m-level">
+          <option value="crit">🔴 Kritisch</option>
+          <option value="high">🟡 Hoch</option>
+          <option value="med">🔵 Mittel</option>
+        </select></div>
+      <div class="form-group"><label>Name</label><input id="m-name" placeholder="z.B. Overreveal" type="text"/></div>
+      <div class="form-group"><label>Beschreibung</label><textarea id="m-desc" placeholder="Was passiert genau? Was ist zu tun?"></textarea></div>
+      ${PROF_SELECT}`,()=>{
+      const name=mval('m-name'); if(!name) return;
+      state.fehler.push({id:genId('f'),level:mval('m-level')||'med',name,desc:mval('m-desc'),proficiency:mval('m-prof')||null});
+      saveStateAndSync(); renderContent(); closeModal();
+    }); return;
+  }
+
+  if(action==='add-skill-item'){
+    const secId = btn.dataset.sectionId;
+    openModal('Neues Item hinzufügen',`
+      <div class="form-group"><label>Text</label><input id="m-text" placeholder="z.B. Pre-aimen beim Peeken" type="text"/></div>
+      <div class="form-group"><label>Erklärung (optional)</label><input id="m-sub" placeholder="Kurze Erläuterung..." type="text"/></div>
+      ${PROF_SELECT}`,()=>{
+      const text=mval('m-text'); if(!text) return;
+      const en=itemIndex[secId]; if(!en) return;
+      en.item.items.push({id:genId('si'),text,sub:mval('m-sub'),proficiency:mval('m-prof')||null});
+      saveStateAndSync(); renderContent(); closeModal();
+    }); return;
+  }
+
+  if(action==='add-section'){
+    const key=btn.dataset.skillKey;
+    openModal('Neuer Block',`
+      <div class="form-group"><label>Icon (Emoji)</label><input id="m-icon" placeholder="🎯" type="text" maxlength="4"/></div>
+      <div class="form-group"><label>Titel</label><input id="m-title" placeholder="z.B. Advanced Mechanics" type="text"/></div>`,()=>{
+      const title=mval('m-title'); if(!title) return;
+      state.skills[key].push({id:genId('sec'),icon:mval('m-icon')||'📌',title,collapsed:false,items:[]});
+      saveStateAndSync(); renderContent(); closeModal();
+    }); return;
+  }
+
+  if(action==='add-warmup-item'){
+    const phId=btn.dataset.phaseId;
+    openModal('Neue Übung',`
+      <div class="form-group"><label>Name</label><input id="m-name" placeholder="z.B. Aimstars 2.0" type="text"/></div>
+      <div class="form-group"><label>Hinweis (optional)</label><input id="m-note" placeholder="z.B. 2 Aufgaben absolvieren" type="text"/></div>
+      <div class="form-group form-check"><label><input id="m-prio" type="checkbox"/> Als Priorität markieren (!!! Marker)</label></div>`,()=>{
+      const name=mval('m-name'); if(!name) return;
+      const en=itemIndex[phId]; if(!en) return;
+      en.item.items.push({id:genId('wi'),name,note:mval('m-note'),priority:mchk('m-prio')});
+      saveStateAndSync(); renderContent(); closeModal();
+    }); return;
+  }
+
+  if(action==='add-warmup-phase'){
+    openModal('Neue Phase',`
+      <div class="form-group"><label>Icon (Emoji)</label><input id="m-icon" placeholder="🎮" type="text" maxlength="4"/></div>
+      <div class="form-group"><label>Phasenname</label><input id="m-name" placeholder="z.B. Phase 3 — Rangspiel" type="text"/></div>
+      <div class="form-group"><label>Dauer (optional)</label><input id="m-time" placeholder="z.B. ~15 MIN" type="text"/></div>`,()=>{
+      const name=mval('m-name'); if(!name) return;
+      state.warmup.push({id:genId('wp'),icon:mval('m-icon')||'🎮',phase:name,time:mval('m-time'),items:[]});
+      saveStateAndSync(); renderContent(); closeModal();
+    }); return;
+  }
+
+  if(action==='add-session-note'){
+    const sesId=btn.dataset.sessionId;
+    openModal('Neue Notiz',`
+      <div class="form-group"><label>Typ</label>
+        <select id="m-type">
+          <option value="neg">❌ Fehler</option>
+          <option value="pos">✅ Gut</option>
+          <option value="tip">💡 Focus / Tipp</option>
+        </select></div>
+      <div class="form-group"><label>Runde (optional)</label><input id="m-round" placeholder="z.B. 7" type="text" maxlength="3"/></div>
+      <div class="form-group"><label>Notiz</label><textarea id="m-text" placeholder="Was ist passiert?"></textarea></div>`,()=>{
+      const text=mval('m-text'); if(!text) return;
+      const en=itemIndex[sesId]; if(!en) return;
+      en.item.notes.push({id:genId('sn'),type:mval('m-type')||'neg',round:mval('m-round')||null,text});
+      saveStateAndSync(); renderContent(); closeModal();
+    }); return;
+  }
+
+  if(action==='add-session'){
+    const next=state.sessions.length+1;
+    openModal('Neue Session',`
+      <div class="form-group"><label>Session-Nummer</label><input id="m-num" value="${next}" type="number"/></div>
+      <div class="form-group"><label>Label</label><input id="m-label" placeholder="Session ${next}" type="text"/></div>
+      <div class="form-group"><label>Bewertung</label>
+        <select id="m-rating">
+          <option value="bad">❌ Viel zu verbessern</option>
+          <option value="ok">🟡 Solide</option>
+          <option value="good">✅ Stark gespielt</option>
+        </select></div>
+      <div class="form-group"><label>Bewertungs-Text</label><input id="m-rtext" placeholder="z.B. FOKUS PROBLEM" type="text"/></div>`,()=>{
+      const num=parseInt(document.getElementById('m-num')?.value)||next;
+      const rating=mval('m-rating')||'bad';
+      const dfl={bad:'ZU VERBESSERN',ok:'SOLIDE',good:'STARK'};
+      state.sessions.push({id:genId('ses'),num,label:mval('m-label')||`Session ${num}`,rating,ratingText:mval('m-rtext')||dfl[rating],notes:[]});
+      saveStateAndSync(); renderContent(); closeModal();
+    }); return;
+  }
+
+  // ---- DELETE ----
+  if(action==='delete-fehler'){
+    if(!confirm('Fehler löschen?')) return;
+    state.fehler=state.fehler.filter(f=>f.id!==id);
+    saveStateAndSync(); renderContent(); return;
+  }
+
+  if(action==='delete-skill-item'){
+    if(!confirm('Item löschen?')) return;
+    const en=itemIndex[id]; if(!en) return;
+    const sec=itemIndex[en.sectionId]?.item; if(!sec) return;
+    sec.items=sec.items.filter(i=>i.id!==id);
+    saveStateAndSync(); renderContent(); return;
+  }
+
+  if(action==='delete-section'){
+    if(!confirm('Ganzen Block mit allen Items löschen?')) return;
+    const en=itemIndex[id]; if(!en) return;
+    state.skills[en.skillKey]=state.skills[en.skillKey].filter(s=>s.id!==id);
+    saveStateAndSync(); renderContent(); return;
+  }
+
+  if(action==='delete-warmup-item'){
+    if(!confirm('Übung löschen?')) return;
+    const en=itemIndex[id]; if(!en) return;
+    const ph=itemIndex[en.phaseId]?.item; if(!ph) return;
+    ph.items=ph.items.filter(i=>i.id!==id);
+    saveStateAndSync(); renderContent(); return;
+  }
+
+  if(action==='delete-warmup-phase'){
+    if(!confirm('Ganze Phase löschen?')) return;
+    state.warmup=state.warmup.filter(p=>p.id!==id);
+    saveStateAndSync(); renderContent(); return;
+  }
+
+  if(action==='delete-session-note'){
+    if(!confirm('Notiz löschen?')) return;
+    const en=itemIndex[id]; if(!en) return;
+    const ses=itemIndex[en.sessionId]?.item; if(!ses) return;
+    ses.notes=ses.notes.filter(n=>n.id!==id);
+    saveStateAndSync(); renderContent(); return;
+  }
+
+  if(action==='delete-session'){
+    if(!confirm('Ganze Session löschen?')) return;
+    state.sessions=state.sessions.filter(s=>s.id!==id);
+    saveStateAndSync(); renderContent(); return;
+  }
+}
+
+// Enter key in modal
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && !document.getElementById('modal-overlay').classList.contains('hidden')){
+    const target=e.target;
+    if(target.tagName!=='TEXTAREA') submitModal();
+  }
+  if(e.key==='Escape') closeModal();
+});
+
+// ================================================================
+// INIT
+// ================================================================
+async function init(){
+  // show loading state
+  document.getElementById('content').innerHTML = `<div style="padding:60px 44px;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-dim);letter-spacing:2px">LADEN...</div>`;
+  myProgress = loadProgress();
+  await loadCoachingData();
+  mergeState();
+  renderNav();
+  renderContent();
+  document.getElementById('content').addEventListener('click', handleClick);
+}
+
+init();
+</script>
+</body>
+</html>

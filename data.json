@@ -1,0 +1,525 @@
+{
+  "fehler": [
+    {
+      "id": "f1",
+      "level": "crit",
+      "name": "Kein Fokus aufs Game",
+      "desc": "AFK während Mates sterben, halbe Stunde nicht aufgepasst. Größtes Problem überhaupt."
+    },
+    {
+      "id": "f2",
+      "level": "crit",
+      "name": "Overreveal",
+      "desc": "Zu weit aus der Deckung herauslehnen, von mehreren Angles getroffen werden."
+    },
+    {
+      "id": "f3",
+      "level": "crit",
+      "name": "Kein Slice the Pie",
+      "desc": "Ecken nicht schrittweise clearen. Immer pie-slicen bevor man reinläuft — nie blind rein."
+    },
+    {
+      "id": "f4",
+      "level": "high",
+      "name": "Kein Buyen nach 1 verlorener Runde",
+      "desc": "Erst Tab schauen was Teammates kaufen, dann entscheiden. Nicht blind kaufen."
+    },
+    {
+      "id": "f5",
+      "level": "high",
+      "name": "Crosshair zu niedrig",
+      "desc": "Crosshair Placement muss auf Kopfhöhe sein. Nah an Ecken positionieren."
+    },
+    {
+      "id": "f6",
+      "level": "high",
+      "name": "Minimap ignorieren",
+      "desc": "Karte regelmäßig checken, Gegner predicten. Nicht in die Mitte starren."
+    },
+    {
+      "id": "f7",
+      "level": "med",
+      "name": "Overpeeking ohne Info",
+      "desc": "Ohne Info blind reinpeeken. Erst Info sammeln (Reveal, Minimap, Teammates), dann peeken."
+    },
+    {
+      "id": "f8",
+      "level": "med",
+      "name": "Unnötiger Dog / Ability Waste",
+      "desc": "Abilities verschwenden wenn Space schon geclearet. Dog nur für Entry nutzen."
+    }
+  ],
+  "skills": {
+    "mechanics": [
+      {
+        "id": "mc1",
+        "title": "Crosshair Placement",
+        "icon": "🎯",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "mi1",
+            "text": "Immer auf Kopfhöhe",
+            "sub": "Nie nach unten schauen wenn du läufst"
+          },
+          {
+            "id": "mi2",
+            "text": "Nah an Ecken positionieren, nicht in die Mitte",
+            "sub": "Weniger Mausbewegung → schnellere Reaktion"
+          },
+          {
+            "id": "mi3",
+            "text": "Nach Reveal runter schauen",
+            "sub": "Sicher gehen ob niemand mehr da ist"
+          }
+        ]
+      },
+      {
+        "id": "mc2",
+        "title": "Schuss-Mechanik",
+        "icon": "🔫",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "mi4",
+            "text": "Kein Run and Gun",
+            "sub": "Immer stoppen bevor schießen"
+          },
+          {
+            "id": "mi5",
+            "text": "Kein Overheat",
+            "sub": "Nicht zu viele Schüsse hintereinander — Spray verloren"
+          },
+          {
+            "id": "mi6",
+            "text": "Während Gunfight adjusten",
+            "sub": "Maus bewegen, nicht einfrieren"
+          }
+        ]
+      },
+      {
+        "id": "mc3",
+        "title": "Micro Flicks",
+        "icon": "⚡",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "mi7",
+            "text": "Gezielte schnelle Flick-Bewegungen trainieren",
+            "sub": "Nicht wild zucken"
+          },
+          {
+            "id": "mi8",
+            "text": "Aimlabs: Micro Flicks von A Site Heaven",
+            "sub": "Mehrmals wiederholen!"
+          }
+        ]
+      }
+    ],
+    "movement": [
+      {
+        "id": "mv1",
+        "title": "Peeken & Timing",
+        "icon": "🚶",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "mvi1",
+            "text": "Pre-aimen beim Peeken",
+            "sub": "Crosshair schon auf dem Angle bevor du reinschaust"
+          },
+          {
+            "id": "mvi2",
+            "text": "Zeit lassen nach dem Peek",
+            "sub": "Nicht sofort schießen — kurz warten"
+          },
+          {
+            "id": "mvi3",
+            "text": "Kein Shift-Peeken",
+            "sub": ""
+          },
+          {
+            "id": "mvi4",
+            "text": "Nicht blind rein ohne Info",
+            "sub": ""
+          }
+        ]
+      },
+      {
+        "id": "mv2",
+        "title": "Positionierung",
+        "icon": "🗺️",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "mvi5",
+            "text": "Slice the Pie",
+            "sub": "Ecken schrittweise clearen, nie blind umrunden"
+          },
+          {
+            "id": "mvi6",
+            "text": "Nicht zu offen stehen",
+            "sub": "Nie von mehreren Angles gleichzeitig geshottable"
+          },
+          {
+            "id": "mvi7",
+            "text": "Deckung nutzen",
+            "sub": "Hinter Wand gehen wenn es brenzlich wird"
+          },
+          {
+            "id": "mvi8",
+            "text": "Reposition nach Kill oder Gefahr",
+            "sub": ""
+          },
+          {
+            "id": "mvi9",
+            "text": "Close gehen bei Waffendisadvantage",
+            "sub": "Schlechtere Waffe = kürzere Distanz anstreben"
+          }
+        ]
+      },
+      {
+        "id": "mv3",
+        "title": "Strafen",
+        "icon": "↔️",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "mvi10",
+            "text": "Counter-strafe",
+            "sub": "Bewegen → stoppen → einzelner Schuss"
+          },
+          {
+            "id": "mvi11",
+            "text": "Mehr Movement generell",
+            "sub": "Ist besser geworden, weiter üben"
+          },
+          {
+            "id": "mvi12",
+            "text": "Spectre nicht auf Long Range",
+            "sub": ""
+          }
+        ]
+      }
+    ],
+    "gamesense": [
+      {
+        "id": "gs1",
+        "title": "Map Awareness",
+        "icon": "🗺️",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "gsi1",
+            "text": "Minimap regelmäßig checken",
+            "sub": "Nicht lost in die Mitte starren"
+          },
+          {
+            "id": "gsi2",
+            "text": "Tab checken was Teammates kaufen",
+            "sub": "Dann eigene Kaufentscheidung anpassen"
+          },
+          {
+            "id": "gsi3",
+            "text": "Gegner predicten",
+            "sub": "Basierend auf letzter bekannter Info"
+          }
+        ]
+      },
+      {
+        "id": "gs2",
+        "title": "Economy",
+        "icon": "💰",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "gsi4",
+            "text": "Kein Buy nach 1 verlorener Runde ohne Tab-Check",
+            "sub": "Wenn alle sparen → alle sparen → sonst verliert man Runde 3"
+          }
+        ]
+      },
+      {
+        "id": "gs3",
+        "title": "Team Play",
+        "icon": "🤝",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "gsi5",
+            "text": "Nicht zu defensiv spielen",
+            "sub": ""
+          },
+          {
+            "id": "gsi6",
+            "text": "Ruhig mit Team pushen wenn unsicher",
+            "sub": "Lieber langsamer oder Ability nutzen statt solo"
+          },
+          {
+            "id": "gsi7",
+            "text": "Kein unnötiger Dog wenn Space geclearet",
+            "sub": ""
+          },
+          {
+            "id": "gsi8",
+            "text": "Fokus halten",
+            "sub": "AFK wenn Mates sterben ist nicht akzeptabel"
+          }
+        ]
+      }
+    ],
+    "abilities": [
+      {
+        "id": "ab1",
+        "title": "Dog (Entry-Ability)",
+        "icon": "🐕",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "abi1",
+            "text": "Dog = Entry Tool — schicken, dann sofort mitpushen",
+            "sub": "Dog ohne Push danach = useless"
+          },
+          {
+            "id": "abi2",
+            "text": "Nicht für Attack nutzen wenn du nicht pushst",
+            "sub": ""
+          },
+          {
+            "id": "abi3",
+            "text": "Richtig clearen mit Dog",
+            "sub": "Abilities für Info nutzen, nicht für direkten Kill"
+          }
+        ]
+      },
+      {
+        "id": "ab2",
+        "title": "Reveal / Smoke",
+        "icon": "💨",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "abi4",
+            "text": "Reveal für Entry nutzen",
+            "sub": "Hinter Gegner schmeißen für Infovorteil"
+          },
+          {
+            "id": "abi5",
+            "text": "Timing beachten",
+            "sub": "Nicht zu früh, nicht zu spät"
+          },
+          {
+            "id": "abi6",
+            "text": "Ult sinnvoll nutzen",
+            "sub": "Nur wenn Smokes vorhanden — sonst situationsbedingt useless"
+          }
+        ]
+      },
+      {
+        "id": "ab3",
+        "title": "Allgemeine Regeln",
+        "icon": "⚠️",
+        "collapsed": false,
+        "items": [
+          {
+            "id": "abi7",
+            "text": "Nicht mit Ability peeken",
+            "sub": "Erst Ability, dann warten, dann peeken"
+          },
+          {
+            "id": "abi8",
+            "text": "Abilities nicht dumm verschwenden",
+            "sub": ""
+          },
+          {
+            "id": "abi9",
+            "text": "Kein Ability-Einsatz wenn Space schon geclearet",
+            "sub": ""
+          }
+        ]
+      }
+    ]
+  },
+  "warmup": [
+    {
+      "id": "wp1",
+      "phase": "Phase 1 — Aimlabs",
+      "icon": "🎮",
+      "time": "~10–15 MIN",
+      "items": [
+        {
+          "id": "wi1",
+          "name": "Aimstars 2.0",
+          "note": "Ersten 2 Aufgaben absolvieren",
+          "priority": false
+        },
+        {
+          "id": "wi2",
+          "name": "Jessies Warmup",
+          "note": "1 Aufgabe",
+          "priority": false
+        },
+        {
+          "id": "wi3",
+          "name": "Ascent A Site — Crosshair Placement",
+          "note": "Spezifisches Crosshair Placement Training",
+          "priority": false
+        },
+        {
+          "id": "wi4",
+          "name": "Micro Flicks von A Site Heaven",
+          "note": "Mehrmals wiederholen bis es sich gut anfühlt",
+          "priority": true
+        }
+      ]
+    },
+    {
+      "id": "wp2",
+      "phase": "Phase 2 — Deathmatch",
+      "icon": "⚔️",
+      "time": "~10 MIN",
+      "items": [
+        {
+          "id": "wi5",
+          "name": "Pre-aimen beim Peeken",
+          "note": "Crosshair schon auf dem Angle platzieren",
+          "priority": false
+        },
+        {
+          "id": "wi6",
+          "name": "Strafen mit einzelnen Schüssen",
+          "note": "Bewegen → stoppen → einzelner Schuss → weiter",
+          "priority": false
+        },
+        {
+          "id": "wi7",
+          "name": "Deckung nutzen",
+          "note": "Aktiv Objekte verwenden, nie offen stehen",
+          "priority": false
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "id": "ses1",
+      "num": 1,
+      "label": "Session 1",
+      "rating": "bad",
+      "ratingText": "VIEL ZU VERBESSERN",
+      "notes": [
+        {
+          "id": "sn1",
+          "type": "neg",
+          "round": null,
+          "text": "Kein Buy nach Runde 1 verloren — Tab nicht gecheckt"
+        },
+        {
+          "id": "sn2",
+          "type": "neg",
+          "round": null,
+          "text": "Pre-aimen vergessen beim Peeken"
+        },
+        {
+          "id": "sn3",
+          "type": "neg",
+          "round": null,
+          "text": "Overreveal — zu offen gestanden"
+        },
+        {
+          "id": "sn4",
+          "type": "neg",
+          "round": null,
+          "text": "Unnötiger Dog obwohl Space schon geclearet"
+        },
+        {
+          "id": "sn5",
+          "type": "neg",
+          "round": null,
+          "text": "Dog für Attack statt für Info genutzt"
+        },
+        {
+          "id": "sn6",
+          "type": "neg",
+          "round": null,
+          "text": "Run and Gun"
+        },
+        {
+          "id": "sn7",
+          "type": "tip",
+          "round": null,
+          "text": "Focus: Passive Aim + Hindernisse aktiv nutzen"
+        }
+      ]
+    },
+    {
+      "id": "ses2",
+      "num": 2,
+      "label": "Session 2",
+      "rating": "bad",
+      "ratingText": "FOKUS PROBLEM",
+      "notes": [
+        {
+          "id": "sn8",
+          "type": "neg",
+          "round": null,
+          "text": "Kein Fokus — halbe Stunde AFK während Mates starben. Größtes Problem."
+        },
+        {
+          "id": "sn9",
+          "type": "pos",
+          "round": "5",
+          "text": "Solide Runde gespielt"
+        },
+        {
+          "id": "sn10",
+          "type": "neg",
+          "round": "6",
+          "text": "Overrevealed + kein Slice the Pie + blind rein gepeeked ohne Info"
+        },
+        {
+          "id": "sn11",
+          "type": "pos",
+          "round": "6",
+          "text": "Gute Ult genutzt (Timing ok)"
+        },
+        {
+          "id": "sn12",
+          "type": "neg",
+          "round": "7",
+          "text": "Insane Flank aber keine Zeit gelassen — zu schnell rein"
+        },
+        {
+          "id": "sn13",
+          "type": "pos",
+          "round": "8",
+          "text": "Guten Angle mit Confidence gehalten"
+        },
+        {
+          "id": "sn14",
+          "type": "neg",
+          "round": "8",
+          "text": "Overpeeked am Ende"
+        },
+        {
+          "id": "sn15",
+          "type": "neg",
+          "round": "10",
+          "text": "Ult genutzt aber keine Smokes → useless"
+        },
+        {
+          "id": "sn16",
+          "type": "neg",
+          "round": "11",
+          "text": "Operator Dog genutzt ohne danach zu pushen → useless"
+        },
+        {
+          "id": "sn17",
+          "type": "neg",
+          "round": "12",
+          "text": "Karte nicht geschaut — in die Mitte gestarrt"
+        }
+      ]
+    }
+  ]
+}
