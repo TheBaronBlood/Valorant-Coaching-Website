@@ -462,6 +462,14 @@ async function loadCoachingData(){
 }
 
 // ---- Save to GitHub ----
+async function fetchSHA(apiUrl, branch, headers){
+  try{
+    const r = await fetch(apiUrl+'?ref='+branch+'&t='+Date.now(), {headers, cache:'no-store'});
+    if(r.ok){ const j=await r.json(); return j.sha||null; }
+  }catch(e){}
+  return null;
+}
+
 async function saveToGitHub(){
   if(!ghConfig || !ghConfig.token || !ghConfig.owner || !ghConfig.repo){
     openGhSettings();
@@ -472,38 +480,36 @@ async function saveToGitHub(){
   updateSyncStatus('saving');
   syncCoachingFromState();
 
-  try{
-    const branch = ghConfig.branch||'main';
-    const apiUrl = `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/data.json`;
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(coachingData, null, 2))));
+  const branch = ghConfig.branch||'main';
+  const apiUrl = `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/data.json`;
+  const headers = {'Authorization':'token '+ghConfig.token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(coachingData, null, 2))));
 
-    // get current sha
-    let sha = null;
-    try{
-      const r = await fetch(apiUrl+'?ref='+branch, {headers:{'Authorization':'token '+ghConfig.token,'Accept':'application/vnd.github.v3+json'}});
-      if(r.ok){ const j=await r.json(); sha=j.sha; }
-    }catch(e){}
-
+  const attemptSave = async (attempt) => {
+    const sha = await fetchSHA(apiUrl, branch, headers);
     const body = {message:`coaching update ${new Date().toLocaleDateString('de-DE')}`,content,branch};
     if(sha) body.sha = sha;
 
-    const res = await fetch(apiUrl, {
-      method:'PUT',
-      headers:{'Authorization':'token '+ghConfig.token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
-      body: JSON.stringify(body)
-    });
+    const res = await fetch(apiUrl, {method:'PUT', headers, body:JSON.stringify(body)});
+    if(res.ok) return true;
 
-    if(res.ok){
-      updateSyncStatus('synced');
-      showToast('✓ Gespeichert auf GitHub');
-    } else {
-      const err = await res.json();
-      updateSyncStatus('error');
-      showToast('❌ Fehler: '+(err.message||res.status));
+    const err = await res.json().catch(()=>({}));
+    // SHA mismatch — retry once with fresh SHA
+    if(attempt < 2 && (res.status===409 || res.status===422)){
+      await new Promise(r=>setTimeout(r,600));
+      return attemptSave(attempt+1);
     }
+    throw new Error(err.message||res.status);
+  };
+
+  try{
+    await attemptSave(1);
+    updateSyncStatus('synced');
+    showToast('✓ Gespeichert auf GitHub');
   }catch(e){
     updateSyncStatus('error');
-    showToast('❌ Netzwerk-Fehler');
+    showToast('❌ Fehler: '+e.message);
+    console.error(e);
   }
   ghSaving = false;
 }
